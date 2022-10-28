@@ -2,7 +2,8 @@
 CREATE TABLE meet (
     meet_id SERIAL PRIMARY KEY,
     start_time time,
-    end_time time
+    end_time time,
+    meet_name varchar(255)
 );
 
 CREATE TABLE employee (

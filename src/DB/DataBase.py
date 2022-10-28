@@ -13,6 +13,7 @@ class DataBase:
     def connect(cls):
         try:
             connection = psycopg2.connect(
+                dbname="analytics",
                 user='sasiz',
                 password='12345678',
                 host='127.0.0.1',
@@ -32,8 +33,3 @@ class DataBase:
             self.cursor.close()
             self.conn.close()
             print("Соединение с PostgreSQL закрыто")
-
-
-if __name__ == '__main__':
-    db = DataBase()
-    db.create_tables()
