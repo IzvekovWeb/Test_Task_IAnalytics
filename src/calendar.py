@@ -22,12 +22,14 @@ class Calendar():
 
 
     @staticmethod
-    def create_meet(start_time: time, end_time: time, name: str = None):
+    def create_meet(start_time: time, end_time: time, name: str = None) -> int:
         db = DataBase()
         cur = db.cursor
 
-        sql = "INSERT INTO meet (start_time, end_time, meet_name) VALUES (%s, %s, %s)"
+        sql = "INSERT INTO meet (start_time, end_time, meet_name) VALUES (%s, %s, %s) RETURNING meet_id"
         cur.execute(sql, (start_time, end_time, name))
+        meet_id = cur.fetchone()[0]
+        return meet_id
 
     @staticmethod
     def add_meet_to_employee(employee_id, meet_id):
