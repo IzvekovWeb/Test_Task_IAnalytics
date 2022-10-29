@@ -1,14 +1,14 @@
 
 
 
-def main():
-    menu = """
-    Учёт слотов времени сотрудников
+from controller import show_employee_work_time
 
+
+def main():
+    menu = """\nУчёт слотов времени сотрудников
     1. Рабочее время сотрудника
     2. Свободные слоты сотрудника
     3. Добавить встречу
-
     4. Выйти
     """
     while True:
@@ -16,7 +16,8 @@ def main():
         answer = input("Выберите дейсиве (номер): ")
         match answer:
             case '1':
-                pass
+                phone = input('Номер телефона сотрудника (79266693217): ')
+                show_employee_work_time(phone)
             case '2':
                 pass
             case '3':

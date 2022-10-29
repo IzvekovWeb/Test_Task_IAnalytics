@@ -23,7 +23,7 @@ class DataBase:
 
             # Курсор для выполнения операций с базой данных
             cursor = connection.cursor()
-            print("Соединение с PostgreSQL открыто")
+            # print("Соединение с PostgreSQL открыто")
             return connection, cursor
         except (Exception, Error) as e:
             print("Ошибка при работе с PostgreSQL", e)
@@ -32,4 +32,4 @@ class DataBase:
         if self.cursor:
             self.cursor.close()
             self.conn.close()
-            print("Соединение с PostgreSQL закрыто")
+            # print("Соединение с PostgreSQL закрыто")
