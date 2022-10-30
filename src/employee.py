@@ -39,6 +39,17 @@ class Employee():
         cur.execute(sql, (self.name, self.surname, self.position, self.phone, self.start_work, self.end_work))
 
     @staticmethod
+    def get_all_employees():
+        db = DataBase()
+        cur = db.cursor
+        cur = db.conn.cursor(cursor_factory=RealDictCursor)
+
+        sql = "SELECT * FROM employee"
+        cur.execute(sql)
+
+        return cur.fetchall()
+
+    @staticmethod
     def search_by_phone(phone: str):
         db = DataBase()
         cur = db.conn.cursor(cursor_factory=RealDictCursor)

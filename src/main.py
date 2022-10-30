@@ -2,11 +2,11 @@
 
 
 from datetime import time
-from controller import create_meet, show_employee_work_time
+from controller import add_meet_to_employee, create_meet, show_all_employees, show_all_meets, show_employee_work_time
 
 
 def main():
-    menu = """\nУчёт слотов времени сотрудников
+    menu = """\nКалендарь
     1. Рабочее время сотрудника
     2. Свободные слоты сотрудника
     3. Создать встречу
@@ -39,8 +39,29 @@ def main():
                 except ValueError as e:
                     print(f'Ошибка: Неверный формат времени! {e}')
             case '4':
-                # add_meet_to_employee()
-                pass
+                show_all_meets()
+                while True:
+                    try:
+                        answer = input('Показать сотрудников? [Да\Нет]: ')
+                        if answer.lower() == 'да':
+                            show_all_employees()
+                            break
+                        elif answer.lower() == 'нет':
+                            break
+                        else:
+                            print('Ответ неверный')
+                            continue
+                    except IOError as e: 
+                        print(e)
+                
+                print('Назначение встречи сотруднику:')
+                try:
+                    meet_id = int(input('ID встречи: '))
+                    employee_id = int(input('ID сотрудника: '))
+                except ValueError as e:
+                    print('Введены неверные данные')
+                
+                add_meet_to_employee(employee_id, meet_id)
             case '5':
                 break
 
