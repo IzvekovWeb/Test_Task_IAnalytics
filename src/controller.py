@@ -49,11 +49,14 @@ def show_all_employees():
 
 
 def add_meet_to_employee(employee_id, meet_id):
-    try:
-        Calendar.add_meet_to_employee(employee_id, meet_id)
-        print(f'Встреча {meet_id} назначена сотруднику {employee_id}')
-    except Exception as e:
-        print(f'Возникла ошибка: {e}')
+    if Calendar.check_is_slot_free(employee_id, meet_id):
+        try:
+            Calendar.add_meet_to_employee(employee_id, meet_id)
+            print(f'Встреча {meet_id} назначена сотруднику {employee_id}')
+        except Exception as e:
+            print(f'Возникла ошибка: {e}')
+    else:
+        print('Данное время занято. Втреча не назначена')
 
 def show_free_employee_slots(employee_id):
     slots = Calendar.get_free_employee_slots(employee_id)

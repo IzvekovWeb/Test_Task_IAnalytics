@@ -31,9 +31,23 @@ class Calendar():
     def add_meet_to_employee(employee_id, meet_id):
         db = DataBase()
         cur = db.cursor
-
+        
         sql = "INSERT INTO calendar (employee_id, meet_id) VALUES (%s, %s)"
         cur.execute(sql, (employee_id, meet_id))
+
+    def check_is_slot_free(employee_id, meet_id):
+        db = DataBase()
+        cur = db.cursor
+
+        sql = "SELECT start_time, end_time FROM meet WHERE meet_id=%s"
+        cur.execute(sql, (meet_id, ))
+        meet_time = cur.fetchone()
+
+        free_slots = Calendar.get_free_employee_slots(employee_id)
+        for slot_time in free_slots:
+            if meet_time[0] >= slot_time[0] and meet_time[1] <= slot_time[1]:
+                return True
+        return False
 
 
     def get_free_employee_slots(employee_id) -> tuple:
@@ -86,3 +100,5 @@ if __name__ == "__main__":
     # calendar.create_meet(start, end, 'Планёрка')
 
     # --------------    
+
+    # print(Calendar.check_is_slot_free(1, 6))
