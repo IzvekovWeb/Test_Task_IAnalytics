@@ -2,11 +2,14 @@
 
 
 from datetime import time
-from controller import add_meet_to_employee, create_meet, show_all_employees, show_all_meets, show_employee_work_time
+from time import sleep
+from controller import add_meet_to_employee, create_meet, get_employee_by_phone, show_all_employees,\
+                    show_all_meets, show_employee_work_time, show_free_employee_slots
 
 
 def main():
     menu = """\nКалендарь
+    0. Найти сотрудника по номеру телефона
     1. Рабочее время сотрудника
     2. Свободные слоты сотрудника
     3. Создать встречу
@@ -17,11 +20,22 @@ def main():
         print(menu)
         answer = input("Выберите дейсиве (номер): ")
         match answer:
-            case '1':
+            case '0':
                 phone = input('Номер телефона сотрудника (79266693217): ')
-                show_employee_work_time(phone)
+                print(get_employee_by_phone(phone))
+            case '1':
+                try: 
+                    employee_id = int(input('ID сотрудника: '))
+                except ValueError:
+                    print(f'Ошибка: {e}')
+                show_employee_work_time(employee_id)
             case '2':
-                pass
+                show_menu_employees()
+                try: 
+                    employee_id = int(input('ID сотрудника: '))
+                except ValueError:
+                    print(f'Ошибка: {e}')
+                show_free_employee_slots(employee_id)
             case '3':
                 try:
                     name = input("Название: ") or None
@@ -40,19 +54,7 @@ def main():
                     print(f'Ошибка: Неверный формат времени! {e}')
             case '4':
                 show_all_meets()
-                while True:
-                    try:
-                        answer = input('Показать сотрудников? [Да\Нет]: ')
-                        if answer.lower() == 'да':
-                            show_all_employees()
-                            break
-                        elif answer.lower() == 'нет':
-                            break
-                        else:
-                            print('Ответ неверный')
-                            continue
-                    except IOError as e: 
-                        print(e)
+                show_menu_employees()
                 
                 print('Назначение встречи сотруднику:')
                 try:
@@ -64,6 +66,22 @@ def main():
                 add_meet_to_employee(employee_id, meet_id)
             case '5':
                 break
+        sleep(3)
+
+def show_menu_employees():
+    while True:
+        try:
+            answer = input('Показать сотрудников? [Да\Нет]: ')
+            if answer.lower() == 'да':
+                show_all_employees()
+                break
+            elif answer.lower() == 'нет':
+                break
+            else:
+                print('Ответ неверный')
+                continue
+        except IOError as e: 
+            print(e)
 
 if __name__ == "__main__":
     main()
